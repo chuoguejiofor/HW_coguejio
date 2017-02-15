@@ -1,0 +1,10 @@
+library(tibble)
+library(dplyr)
+library(MASS)
+cscorecard <- read.csv("https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv", na.strings=c(" ", "NULL", "PrivacySuppressed"))
+cscorecard <- tbl_df(cscorecard)
+summary(cscorecard)
+attach(cscorecard)
+fit <- lm(GRAD_DEBT_MDN_SUPP ~ PBI + ANNHI + AANAPII + HSI + NANTI + MENONLY + WOMENONLY + RELAFFIL + SAT_AVG,cscorecard)
+step <- stepAIC(fit, direction="both")
+step$anova
