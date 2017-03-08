@@ -1,0 +1,12 @@
+library(tibble)
+library(dplyr)
+library(rpart)
+cscorecard <- read.csv("https://ed-public-download.apps.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv", na.strings=c(" ", "NULL", "PrivacySuppressed"))
+cscorecard <- tbl_df(cscorecard)
+attach(cscorecard)
+fit <- rpart(GRAD_DEBT_MDN_SUPP ~ SAT_AVG + UGDS + PCTFLOAN + C150_L4_POOLED_SUPP)
+plotcp(fit)
+plot(fit, uniform=TRUE, main="Grad Debt")
+options(scipen=999)
+text(fit, use.n=TRUE, all=TRUE, cex=.8)
+
